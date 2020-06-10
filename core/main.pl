@@ -4,11 +4,13 @@ use utf8;
 use open ':std', ':encoding(UTF-8)';
 use Term::ANSIColor;
 
+require "$mepath/core/customuseragent.pl";
+
 my $can_regexp=1;
 eval "use Regexp::Common \"URI\"";
 if($@) { $can_regexp=0; }
 
-$ua = LWP::UserAgent->new();
+$ua = CustomUserAgent->new();
 $ua->protocols_allowed( [ 'http' ] );
 if($target =~ /^https:\/\//) {
   my $can_https=1;

@@ -34,6 +34,7 @@ if(!defined $ARGV[0]){
 }
 $cookie=1;
 $proxy=1;
+$delay=0;
 #Start help Function
 sub help
 {
@@ -58,6 +59,7 @@ Usage:	$0 [options]
            Proxy example: --proxy http://127.0.0.1:8080
                                   https://127.0.0.1:443
                                   socks://127.0.0.1:414
+--delay <Delay>                 |   Set delay.
                        
 --about                         |   About Author
 --update                        |   Update to the latest version.
@@ -103,6 +105,7 @@ GetOptions(
   'cookie=s' => \$cookie,
   'u|url=s' => \$target,
   'm|mass=s' => \$urlfile,
+  'delay=s' => \$delay,
   'version' => sub { print "\n\nVersion : $version\n\n";exit; },
 
 );
@@ -113,5 +116,12 @@ if(($target !~ /\S/)&&($urlfile !~ /\S/)){
   exit (1);
 }
 if($target !~ /^https?:\/\//) { $target = "http://$target"; };
+
+if($delay !~ /^\d+$/){
+  print color("red");
+  print "[+] Invalid delay specified!\n\n";
+  print color("reset");
+  exit (1);
+}
 
 #End help Function
